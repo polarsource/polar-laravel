@@ -11,15 +11,13 @@ class PolarSignature implements SignatureValidator
 {
     public function isValid(Request $request, WebhookConfig $config): bool
     {
-        $signature = $request->header($config->signatureHeaderName);
-        if (!$signature) {
-            return false;
-        }
-        $signingSecret = $config->signingSecret;
-        if (empty($signingSecret)) {
-            throw WebhookFailed::signingSecretNotSet();
-        }
-        $computedSignature = hash_hmac('sha512', $request->getContent(), $signingSecret);
-        return hash_equals($signature, $computedSignature);
+        $signingSecret = base64_encode($config->signingSecret);
+        $wh = new \StandardWebhooks\Webhook($signingSecret);
+
+        return boolval( $wh->verify($request->getContent(), array(
+            "webhook-id" => $request->header("webhook-id"),
+            "webhook-signature" => $request->header("webhook-signature"),
+            "webhook-timestamp" => $request->header("webhook-timestamp"),
+        )));
     }
 }

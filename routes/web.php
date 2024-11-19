@@ -12,5 +12,3 @@ Route::get('/', function () {
 Route::get('/products', [ProductsController::class, 'handle']);
 Route::get('/checkout', [CheckoutController::class, 'handle']);
 Route::get('/confirmation', [ConfirmationController::class, 'handle']);
-
-Route::webhooks('/webhook/polar');

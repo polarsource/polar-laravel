@@ -12,7 +12,7 @@ class ProcessWebhook extends ProcessWebhookJob
         $decoded = json_decode($this->webhookCall, true);
         $data = $decoded['payload'];
 
-        switch ($data['event']) {
+        switch ($data['type']) {
             case "checkout.created":
                 // Handle the checkout created event
                 break;
@@ -36,7 +36,7 @@ class ProcessWebhook extends ProcessWebhookJob
                 break;
             default:
                 // Handle unknown event
-                Log::info("Unknown event", $data['event']);
+                Log::info($data['type']);
                 break;
         }
 
