@@ -11,7 +11,7 @@ class ConfirmationController extends Controller
     public function handle(Request $request)
     {
         // Change from sandbox-api.polar.sh -> api.polar.sh when ready to go live
-        // And don't forget to update the .env file with the correct POLAR_ORGANIZATION_ID and POLAR_WEBHOOK_SECRET
+        // And don't forget to update the .env file with the correct POLAR_WEBHOOK_SECRET
         $data = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('POLAR_API_KEY'),
             'Content-Type' => 'application/json',
